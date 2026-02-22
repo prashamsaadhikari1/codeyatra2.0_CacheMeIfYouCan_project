@@ -1,14 +1,16 @@
+
 // routes/reports.js
 // import express from "express";
 // import upload from "../middleware/upload.js";
 import pool from "../config/db.js";
-
-
+import { photoService } from "../services/photoService.js";
 
  export const report = async (req, res) => {
   const { user_id, issue_type, description, lat, lng } = req.body;
   // const photo_url = req.file ? /uploads/${req.file.filename} : null;
-  const photo_url = req.file ? `/uploads/${req.file.filename}` : null;
+  // const photo_url = req.file ? /uploads/${req.file.filename} : null;
+
+  const photo_url = photoService.getRelativePath(req.file);
 
   try {
     const result = await pool.query(
